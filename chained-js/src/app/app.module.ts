@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import { ConnectWalletComponent } from './features/connect-wallet/connect-wallet.component';
 
 const providerOptions =  {
   walletconnect: {
@@ -18,7 +19,8 @@ const providerOptions =  {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConnectWalletComponent
   ],
   imports: [
     BrowserModule,

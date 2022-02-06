@@ -1,0 +1,10 @@
+<div class="row justify-content-center align-items-center flex-row text-center connect-container">
+    <div class="col">
+        <button class="btn btn-info" (click)="connect()">Connect to Web3</button>
+    </div>
+</div>
+<m-web3-modal title="Connect to your wallet"
+              description="User your Metamask account to interact with the contract"
+              dismissText="cancel"
+              [promptMetamaskIfNotInstalled]="true">
+</m-web3-modal>
