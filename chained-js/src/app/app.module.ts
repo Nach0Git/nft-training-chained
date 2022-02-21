@@ -8,37 +8,31 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ConnectWalletComponent } from './features/connect-wallet/connect-wallet.component';
 
-const providerOptions =  {
+const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
-      options: {
+    options: {
       infuraId: 'INFURA_ID',
     },
   },
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ConnectWalletComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    Web3ModalModule,
-    NgbModule
-  ],
-  providers: [    {
-    provide: Web3ModalService,
-    useFactory: () => {
-      return new Web3ModalService({
-        network: "mainnet",
-        cacheProvider: true,
-        providerOptions,
-        disableInjectedProvider: false
-      });
+  declarations: [AppComponent, ConnectWalletComponent],
+  imports: [BrowserModule, AppRoutingModule, Web3ModalModule, NgbModule],
+  providers: [
+    {
+      provide: Web3ModalService,
+      useFactory: () => {
+        return new Web3ModalService({
+          network: 'mainnet',
+          cacheProvider: true,
+          providerOptions,
+          disableInjectedProvider: false,
+        });
+      },
     },
-  },],
-  bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
-import {Web3ModalService} from '@mindsorg/web3modal-angular';
-import { Web3Provider } from '@ethersproject/providers';
-import {BehaviorSubject} from 'rxjs';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
+import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DAppService {
-  private web3js: Web3Provider;
-  private provider: any;
-  public accounts: string[];
+  public isConnected$: Observable<boolean>;
+  public signerAddress: string;
 
+  private web3Provider: Web3Provider;
+  private signer: JsonRpcSigner;
   private connected = new BehaviorSubject<boolean>(false);
-  public isConnected$ = this.connected.asObservable();
 
-  constructor(private web3ModalService: Web3ModalService) { }
+  constructor(private web3ModalService: Web3ModalService) {
+    this.isConnected$ = this.connected.asObservable();
+  }
 
-  public async connect() {
+  public async connect(): Promise<any> {
     this.web3ModalService.clearCachedProvider();
 
-    this.provider = await this.web3ModalService.open();
-    this.web3js = new Web3Provider(this.provider);
-    this.accounts = await this.web3js.listAccounts();
-    this.connected.next(true)
+    const provider: any = await this.web3ModalService.open();
+    this.web3Provider = new Web3Provider(provider);
+    this.signer = this.web3Provider.getSigner();
+    this.signerAddress = await this.signer.getAddress();
+
+    const network = await this.web3Provider.getNetwork();
+    console.log(network);
+    this.connected.next(true);
   }
 }
